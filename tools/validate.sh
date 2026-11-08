@@ -11,6 +11,8 @@ usage() {
 run_static_checks() {
     local actionlint_bin
     local test_dir
+    local exe_suffix=""
+    case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) exe_suffix=".exe" ;; esac
 
     python3 tools/check_repo.py
 
@@ -26,47 +28,64 @@ run_static_checks() {
     test_dir="$(mktemp -d /tmp/ai-passport-host-tests.XXXXXX)"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
         tests/test_ui_pixel_math.c main/ui_pixel_math.c \
-        -o "${test_dir}/test_ui_pixel_math"
-    "${test_dir}/test_ui_pixel_math"
+        -o "${test_dir}/test_ui_pixel_math${exe_suffix}"
+    "${test_dir}/test_ui_pixel_math${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
         tests/test_demo_navigation.c main/demo_navigation.c \
-        -o "${test_dir}/test_demo_navigation"
-    "${test_dir}/test_demo_navigation"
+        -o "${test_dir}/test_demo_navigation${exe_suffix}"
+    "${test_dir}/test_demo_navigation${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
-        tests/test_key_guard.c -o "${test_dir}/test_key_guard"
-    "${test_dir}/test_key_guard"
+        tests/test_passport_model.c main/passport_model.c \
+        -o "${test_dir}/test_passport_model${exe_suffix}"
+    "${test_dir}/test_passport_model${exe_suffix}"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_passport_weather_model.c main/passport_weather_model.c \
+        -o "${test_dir}/test_passport_weather_model${exe_suffix}"
+    "${test_dir}/test_passport_weather_model${exe_suffix}"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_passport_transfer.c main/passport_transfer.c \
+        -o "${test_dir}/test_passport_transfer${exe_suffix}"
+    "${test_dir}/test_passport_transfer${exe_suffix}"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Itests/passport_asset_stubs -Imain \
+        tests/test_passport_assets.c main/passport_transfer.c \
+        -o "${test_dir}/test_passport_assets${exe_suffix}"
+    "${test_dir}/test_passport_assets${exe_suffix}"
+    python3 tools/passport_font.py --check
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_key_guard.c -o "${test_dir}/test_key_guard${exe_suffix}"
+    "${test_dir}/test_key_guard${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Icomponents/bsp/src \
         tests/test_bsp_display_rounding.c components/bsp/src/bsp_display_rounding.c \
-        -o "${test_dir}/test_bsp_display_rounding"
-    "${test_dir}/test_bsp_display_rounding"
+        -o "${test_dir}/test_bsp_display_rounding${exe_suffix}"
+    "${test_dir}/test_bsp_display_rounding${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Icomponents/bsp/src \
         tests/test_bsp_es8311_sleep_check.c components/bsp/src/bsp_es8311_sleep_check.c \
-        -o "${test_dir}/test_bsp_es8311_sleep_check"
-    "${test_dir}/test_bsp_es8311_sleep_check"
+        -o "${test_dir}/test_bsp_es8311_sleep_check${exe_suffix}"
+    "${test_dir}/test_bsp_es8311_sleep_check${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror \
         -Itests/battery_stubs -Itests/bsp_stubs -Icomponents/bsp/include \
-        tests/test_bsp_battery.c -o "${test_dir}/test_bsp_battery"
-    "${test_dir}/test_bsp_battery"
+        tests/test_bsp_battery.c -o "${test_dir}/test_bsp_battery${exe_suffix}"
+    "${test_dir}/test_bsp_battery${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror \
         -Itests/bsp_stubs -Icomponents/bsp/include \
-        tests/test_bsp_button.c -o "${test_dir}/test_bsp_button"
-    "${test_dir}/test_bsp_button"
+        tests/test_bsp_button.c -o "${test_dir}/test_bsp_button${exe_suffix}"
+    "${test_dir}/test_bsp_button${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror \
         -Itests/bsp_stubs -Icomponents/bsp/include \
         tests/test_bsp_lvgl_init.c components/bsp/src/bsp_display_rounding.c \
-        -o "${test_dir}/test_bsp_lvgl_init"
-    "${test_dir}/test_bsp_lvgl_init"
+        -o "${test_dir}/test_bsp_lvgl_init${exe_suffix}"
+    "${test_dir}/test_bsp_lvgl_init${exe_suffix}"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror \
         -Itests/audio_stubs -Icomponents/bsp/include -Icomponents/bsp/src \
         tests/test_bsp_audio_recovery.c components/bsp/src/bsp_es8311_sleep_check.c \
-        -o "${test_dir}/test_bsp_audio_recovery"
-    "${test_dir}/test_bsp_audio_recovery"
+        -o "${test_dir}/test_bsp_audio_recovery${exe_suffix}"
+    "${test_dir}/test_bsp_audio_recovery${exe_suffix}"
     for demo in audio low_power ble wifi; do
         "${CC:-cc}" -std=c11 -Wall -Wextra -Werror \
             -ffunction-sections -fdata-sections -Itests/demo_stubs -Imain \
             "tests/test_demo_${demo}_runtime.c" -Wl,--gc-sections \
-            -o "${test_dir}/test_demo_${demo}_runtime"
-        "${test_dir}/test_demo_${demo}_runtime"
+            -o "${test_dir}/test_demo_${demo}_runtime${exe_suffix}"
+        "${test_dir}/test_demo_${demo}_runtime${exe_suffix}"
     done
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_battery_profile.py
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_deep_sleep_contract.py
@@ -99,7 +118,9 @@ run_firmware_checks() (
     PYTHONDONTWRITEBYTECODE=1 python3 tools/archive_firmware.py create \
         "${validation_build_dir}" --archive-root "${repo_root}/build/firmware"
     mkdir -p "${repo_root}/build"
-    install -m 0644 \
+    # Copy bytes without chmod: WSL's Windows-mounted checkout may permit file
+    # writes while rejecting POSIX permission changes on the destination.
+    python3 -c 'import shutil, sys; shutil.copyfile(sys.argv[1], sys.argv[2])' \
         "${validation_build_dir}/FoloToy-AI-Passport-full.bin" \
         "${repo_root}/build/FoloToy-AI-Passport-full.bin"
     echo "Firmware build: PASS"

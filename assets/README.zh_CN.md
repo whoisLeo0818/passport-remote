@@ -10,6 +10,14 @@
 
 可复用的字库文件与生成的字库源码放在 `fonts/`。
 
+名片与音乐遥控应用使用 `fonts/NotoSansSC-wght.ttf`，来源为
+[Google Fonts](https://github.com/google/fonts/tree/main/ofl/notosanssc)，
+按 `fonts/OFL-NotoSansSC.txt`（SIL OFL 1.1）再分发。
+`fonts/passport_font_12.c`、`fonts/passport_font_16.c` 和 `fonts/passport_font_20.c` 是由 `main/CMakeLists.txt`
+编译的常规字重 400、未压缩 4bpp 子集。`fonts/passport-fonts.json` 记录源文件/产物哈希和字符覆盖。
+固定工具版本、命令、支持文本和验证方法见
+[应用指南](../docs/development/passport-card-remote.zh_CN.md)。
+
 - 命名要能反映字族、字重、字级与格式。
 - 记录来源、许可、字符范围、转换命令与目标放置路径。
 - 添加字库前评估 Flash 与内部 RAM 影响；ESP32-C3 无 PSRAM。
@@ -18,6 +26,13 @@
 ## 图片（images）
 
 可复用的源图与生成的显示资产放在 `images/`。
+
+`images/passport/scene-1.png` 至 `scene-6.png` 为 `tools/passport_photos.py`
+生成的原创几何风景示例，按项目 MIT 许可使用。使用字库工具的 Pillow 11.3.0
+环境重新生成。`images/passport/passport_photos.c` 保存预先等比适配
+208 × 208 与 240 × 320 显示区域的 RGB565 版本，由 `main/CMakeLists.txt`
+编译到 Flash。本地 Wi-Fi 管理还支持将浏览器缩放的 RGB565 头像／照片保存到
+应用数据分区；私人上传内容不属于仓库资源。设备不进行图片解码或整屏缩放缓冲分配。
 
 | 文件 | 尺寸与格式 | 用途与来源 |
 | --- | --- | --- |
