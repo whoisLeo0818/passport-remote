@@ -14,9 +14,27 @@ Passport Remote 是适用于 FoloToy AI Passport 的固件，目标硬件为 ESP
 
 长按确定打开或返回功能菜单。用上／下键选择条目，按确定进入。
 
+### 设备界面
+
+| 个人名片 | 音乐遥控 | 天气查看 |
+| --- | --- | --- |
+| ![名片显示头像、日期时间和今日天气](./assets/images/passport/ux/card.png) | ![音乐遥控页显示歌曲文案和播放控制](./assets/images/passport/ux/music.png) | ![天气页显示温度、湿度和风速](./assets/images/passport/ux/weather.png) |
+| 查看个人资料，上／下键切换今日标签与天气。 | 切换歌曲、播放或暂停，长按上／下键调音量。 | 查看当前天气，按确定手动刷新。 |
+
+| 功能菜单 | 照片查看 | 系统设置 |
+| --- | --- | --- |
+| ![设备功能菜单的七个入口](./assets/images/passport/ux/menu.png) | ![设备照片页中的风景示例](./assets/images/passport/ux/photos.png) | ![系统设置中的 Hotspot、Wi-Fi 和蓝牙](./assets/images/passport/ux/settings.png) |
+| 长按确定打开菜单，选择要用的功能。 | 浏览最多 6 张照片，按确定切换全屏。 | 分别控制管理热点与外部 Wi-Fi，并管理蓝牙配对。 |
+
+设备截图由固件使用示例数据渲染。
+
 ## 本地管理
 
 在系统设置开启 **Hotspot**，使用「Hotspot 信息」显示的密码连接 `Passport WIFI`，然后用浏览器打开 `http://192.168.4.1`。网页可编辑名片、添加或替换照片，并配置外部 Wi-Fi 和天气。外部 Wi-Fi 凭据在网页中输入。
+
+<img src="./assets/images/passport/ux/web.png" width="320" alt="Passport Hotspot mobile setup and weather settings">
+
+手机端预览使用示例网络与天气数据。
 
 ## 源码分工
 

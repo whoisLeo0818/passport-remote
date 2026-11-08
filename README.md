@@ -14,9 +14,27 @@ Passport Remote is firmware for the FoloToy AI Passport (ESP32-C3, 8 MB flash). 
 
 Hold OK to open or return to the menu. Use Up and Down to select an entry and OK to open it.
 
+### Device screens
+
+| Personal card | Music remote | Weather |
+| --- | --- | --- |
+| ![Personal card with avatar, date and weather](./assets/images/passport/ux/card.png) | ![Music remote with playback controls](./assets/images/passport/ux/music.png) | ![Weather with temperature, humidity and wind speed](./assets/images/passport/ux/weather.png) |
+| View the profile and switch between the daily tag and weather. | Change tracks, play or pause, and adjust volume. | View current conditions and press OK to refresh. |
+
+| Function menu | Photo viewer | System settings |
+| --- | --- | --- |
+| ![Seven entries in the device menu](./assets/images/passport/ux/menu.png) | ![Landscape photo in the device viewer](./assets/images/passport/ux/photos.png) | ![Hotspot, Wi-Fi and Bluetooth in system settings](./assets/images/passport/ux/settings.png) |
+| Hold OK to open the menu and select a feature. | Browse up to six photos and press OK for fullscreen. | Control the hotspot and external Wi-Fi separately and manage Bluetooth pairing. |
+
+Screens are rendered from the firmware using sample data.
+
 ## Local management
 
 Enable **Hotspot** in Settings, connect to `Passport WIFI` using the password shown under Hotspot Information, then open `http://192.168.4.1` in a browser. The local page edits the card, adds or replaces photos and configures external Wi-Fi and weather. External Wi-Fi credentials are entered in the browser.
+
+<img src="./assets/images/passport/ux/web.png" width="320" alt="Passport Hotspot mobile setup and weather settings">
+
+The mobile preview uses sample network and weather data.
 
 ## Source map
 

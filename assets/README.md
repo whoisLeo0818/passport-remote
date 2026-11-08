@@ -51,6 +51,10 @@ image decoding or full-screen transform buffer.
 - Preserve editable sources where licensing permits, and record the source and license.
 - Never commit device QR secrets, credentials, or personal data in images.
 
+`images/passport/ux/` contains README previews from the firmware's 240 × 320
+LVGL host render and the embedded management page at a 320 px viewport. The
+previews use example profile, network and weather data.
+
 ## Music and sound effects
 
 Store reusable music and sound-effect sources in `music/`.
